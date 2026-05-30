@@ -36,7 +36,12 @@ const registerUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    res.cookie("token", token, { maxAge: 7 * 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,        // required for cross-site
+      sameSite: "none",    // required for cross-site
+    });
 
     res.status(201).json({
       message: "User registered successfully",
@@ -76,7 +81,12 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    res.cookie("token", token, { maxAge: 7 * 24 * 60 * 60 * 1000 });
+    res.cookie("token", token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,        // required for cross-site
+      sameSite: "none",    // required for cross-site
+    });
 
     // sending response
     res.status(200).json({
