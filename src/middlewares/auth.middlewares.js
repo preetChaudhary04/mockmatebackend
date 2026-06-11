@@ -85,7 +85,6 @@ const validateLoginUserInput = (req, res, next) => {
 
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
-
   if (!token) return res.status(401).json({ message: "Token is missing" });
 
   isTokenBlacklisted = await blacklistModel.findOne({ token });
